@@ -1,0 +1,34 @@
+CREATE TABLE employees (
+    employee_id     NUMBER(6) PRIMARY KEY,
+    first_name      VARCHAR2(50) NOT NULL,
+    last_name       VARCHAR2(50) NOT NULL,
+    hire_date       DATE DEFAULT SYSDATE,
+    department      VARCHAR2(50),
+    email           VARCHAR2(100),
+    CONSTRAINT emp_email_uk UNIQUE (email)
+);
+
+CREATE TABLE attendance_records (
+    record_id       NUMBER(10) PRIMARY KEY,
+    employee_id     NUMBER(6) NOT NULL,
+    attendance_date DATE NOT NULL,
+    status          CHAR(1) CHECK (status IN ('P', 'A')),
+    is_critical     CHAR(1) DEFAULT 'N' CHECK (is_critical IN ('Y', 'N')),
+    remarks         VARCHAR2(200),
+    CONSTRAINT fk_emp_attendance FOREIGN KEY (employee_id) 
+        REFERENCES employees(employee_id) ON DELETE CASCADE,
+    CONSTRAINT uk_emp_date UNIQUE (employee_id, attendance_date)
+);
+
+
+CREATE TABLE bonus_calculations (
+    calculation_id  NUMBER(10) PRIMARY KEY,
+    employee_id     NUMBER(6) NOT NULL,
+    calculation_date DATE DEFAULT SYSDATE,
+    total_days      NUMBER(3),
+    total_absences  NUMBER(3),
+    bonus_amount    NUMBER(8,2),
+    bonus_category  VARCHAR2(20),
+    CONSTRAINT fk_emp_bonus FOREIGN KEY (employee_id) 
+        REFERENCES employees(employee_id) ON DELETE CASCADE
+);
