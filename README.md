@@ -3,6 +3,7 @@
 Our company needs an automated system to calculate monthly attendance bonuses for employees. Currently, HR manually reviews attendance records and calculates bonuses, which is time-consuming and error-prone.
 
 **System Requirements**
+
 The system must:
 * Process multiple employees simultaneously
 * Track daily attendance for each employee (Present/Absent)
